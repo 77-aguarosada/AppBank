@@ -10,7 +10,7 @@ import {
   
   } from 'react-native';
 
-import { Container ,Form, InpuTEmail} from './styles';
+
 
 const LoginPage = () => {
   return (
