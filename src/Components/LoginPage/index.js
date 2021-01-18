@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
    View,
    KeyboardAvoidingView,
@@ -6,20 +6,32 @@ import {
    TouchableOpacity,
    StyleSheet,
    Text,
-   Image
+   Image,
+   Platform
   
   } from 'react-native';
 
 
 
-const LoginPage = () => {
-  return (
 
+  export default class LoginPage extends Component{
+   state= {
+     email:'',
+     password:'',
+   };
 
+   handleSubmit =() =>{
+   const {email, password} = this.state;   
+
+   }
+    render(){
+      const {email, password} = this.state;
+
+      return(
 
 
     
-        <KeyboardAvoidingView  style={styles.background}>
+        <KeyboardAvoidingView behavior={Platform.OS=== 'ios'? 'padding':null} style={styles.background}>
           
          
           <View style={styles.containerLogo}>
@@ -38,8 +50,13 @@ const LoginPage = () => {
                 </View>
                       <TextInput style={styles.input}
                     placeholder ="123.345.567-99"
-                    autoCorrect ={false}  
-                    onChangeText={()=>{}}            
+                    autoCorrect ={false} 
+                    autoFocus
+                    autoCapitalize='none'
+                    value={email}
+                    onChangeText={ text =>{ this.setState({email:text})}} 
+                    returnKeyType ='next'  
+                    onSubmitEditing={()=> this.passwordInput.focus()}          
                   />
 
            
@@ -53,13 +70,22 @@ const LoginPage = () => {
 
             <TextInput
             style={styles.input}
+            alue={password}
+           onChangeText={ text =>{ this.setState({password:text})}} 
             placeholder ="******"
             autoCorrect ={false}
-            onChangeText={()=>{}}            
+            secureTextEntry
+            autoCapitalize='none'
+            
+            returnKeyType ='send'  
+            ref={el => {this.passwordInput =el}}
+            onSubmitEditing={this.handleSubmit}         
             />
 
 
-            <TouchableOpacity style={styles.btnSubmit}>
+            <TouchableOpacity 
+            onPress={this.handleSubmit}
+            style={styles.btnSubmit}>
               <Text style={styles.text}>
                Acessar
               </Text>
@@ -69,12 +95,11 @@ const LoginPage = () => {
 
         </KeyboardAvoidingView>
 
-
-  );
+      );
+    }
 }
 
 
-export default LoginPage;
 
 
 const styles = StyleSheet.create({
